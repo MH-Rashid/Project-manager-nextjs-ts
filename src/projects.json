@@ -1,0 +1,68 @@
+[
+  {
+    "id": "p1",
+    "title": "Clean garage",
+    "description": "Tidy away all clutter and open up walking spaces",
+    "dueDate": "07/12/2024"
+  },
+  {
+    "id": "p2",
+    "title": "Build shed",
+    "description": "Small rectangular structure for garden storage",
+    "dueDate": "08/12/2024"
+  },
+  {
+    "id": "p3",
+    "title": "Get refunds for shopping",
+    "description": "For items ordered online",
+    "dueDate": "09/12/2024"
+  },
+  {
+    "id": "p4",
+    "title": "Resolve utility bills issues",
+    "description": "British Gas have taken more than they should have over 2 months' bills",
+    "dueDate": "10/12/2024"
+  },
+  {
+    "id": "p5",
+    "title": "Build new exercise routine",
+    "description": "Begin with dream physique goals in mind and reverse engineer the goal",
+    "dueDate": "11/12/2024"
+  },
+  {
+    "id": "p6",
+    "title": "Revamp personal healthcare",
+    "description": "Find new medical practise and get all current health concerns in the pipeline",
+    "dueDate": "12/12/2024"
+  },
+  {
+    "id": "p7",
+    "title": "Revamp diet",
+    "description": "Eliminate processed foods and substitute with wholesome foods",
+    "dueDate": "01/12/2025"
+  },
+  {
+    "id": "p8",
+    "title": "Build personal study sounds playlist",
+    "description": "A collection of the best sounds to aid deep focus",
+    "dueDate": "02/12/2025"
+  },
+  {
+    "id": "p9",
+    "title": "Construct garden play area",
+    "description": "Our own personal park for the kids to play in",
+    "dueDate": "03/12/2025"
+  },
+  {
+    "id": "p10",
+    "title": "Launch new Amazon product",
+    "description": "Find the most trending products this month, build ideas and launch product",
+    "dueDate": "04/12/2025"
+  },
+  {
+    "id": "p11",
+    "title": "Set up a system to block distractions",
+    "description": "Should work on mobile and desktop. Include schedule for restrictions",
+    "dueDate": "05/12/2025"
+  }
+]
