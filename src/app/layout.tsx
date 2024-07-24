@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+// cannot make into client cmp coz exporting metadata
 
+import React from "react";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 
 import App from "../components/App";
@@ -19,7 +19,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <App />
+        <main className="h-screen flex align-top gap-8">
+          <App />
+          {children}
+        </main>
       </body>
     </html>
   );

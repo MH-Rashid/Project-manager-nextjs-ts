@@ -3,11 +3,12 @@
 import React, { useState } from "react";
 
 import Sidebar from "./Sidebar";
+import Home from "../app/page";
 
 import dummyProjects from "../projects.json";
 import dummyTasks from "../tasks.json";
 
-const App: React.FC<{children?: React.ReactNode}> = (props) => {
+const App: React.FC<{ children?: React.ReactNode }> = (props) => {
   const [selectedProjectId, setSelectedProjectId] = useState(false);
   const [projects, setProjects] = useState(dummyProjects);
   const [tasks, setTasks] = useState(dummyTasks);
@@ -37,14 +38,12 @@ const App: React.FC<{children?: React.ReactNode}> = (props) => {
   // };
 
   return (
-    <main className="h-screen flex align-top gap-8">
-      <Sidebar
-        projects={projects}
-        selectedProjectId={selectedProjectId}
-        // onCreateProject={handleCreateProject}
-        // onDisplayProject={handleSelectProject}
-      />
-    </main>
+    <Sidebar
+      projects={projects}
+      selectedProjectId={selectedProjectId}
+      onDisplayProject={() => {}}
+      onCreateProject={() => {}}
+    />
   );
 };
 

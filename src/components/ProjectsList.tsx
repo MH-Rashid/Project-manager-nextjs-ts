@@ -1,11 +1,8 @@
+import { Project } from "./Sidebar";
+
 interface ProjectsListProps {
-  items: {
-    id: string;
-    title: string;
-    description: string;
-    dueDate: string;
-  }[],
-  onLiftProject: any,
+  items: Project[],
+  onLiftProject: (id: string) => {},
   selectedProjectId: string|boolean,
 }
 
