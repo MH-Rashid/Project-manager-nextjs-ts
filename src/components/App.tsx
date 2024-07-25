@@ -1,17 +1,24 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 
 import Sidebar from "./Sidebar";
 import Home from "../app/page";
-
-import dummyProjects from "../projects.json";
-import dummyTasks from "../tasks.json";
+import Fallback from "./Fallback";
 
 const App: React.FC<{ children?: React.ReactNode }> = (props) => {
+  const router = useRouter();
+
   const [selectedProjectId, setSelectedProjectId] = useState(false);
   const [projects, setProjects] = useState(dummyProjects);
   const [tasks, setTasks] = useState(dummyTasks);
+
+  const handleCreateProject = () => {
+    setSelectedProjectId(false);
+    router.push("/new-project");
+    // setFormDisplay(true);
+  };
 
   // function handleDeleteProject(id) {
   //   const filteredProjects = projects.filter((project) => project.id !== id);
@@ -42,7 +49,7 @@ const App: React.FC<{ children?: React.ReactNode }> = (props) => {
       projects={projects}
       selectedProjectId={selectedProjectId}
       onDisplayProject={() => {}}
-      onCreateProject={() => {}}
+      onCreateProject={handleCreateProject}
     />
   );
 };

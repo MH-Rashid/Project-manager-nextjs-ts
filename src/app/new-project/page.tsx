@@ -1,17 +1,25 @@
 "use client"
 
+import { useRouter } from "next/navigation";
+
 import { LegacyRef, useRef } from "react";
 import { FormEvent } from "react";
 
 import ErrorModal from "../../components/ErrorModal";
 
 const InputForm: React.FC<{ onCancel: () => void, onAddProject: (data: {}) => void }> = (props) => {
+  const router = useRouter();
+
   // const title = useRef<HTMLInputElement | LegacyRef<any>>();
   // const description = useRef<HTMLInputElement>();
   // const dueDate = useRef<HTMLInputElement>();
   
   const dialog = useRef<HTMLDialogElement>();
 
+  const handleCancel = () => {
+    router.push('/');
+  };
+  
   function handleSubmit(event: any) {
     event.preventDefault();
 
@@ -47,7 +55,8 @@ const InputForm: React.FC<{ onCancel: () => void, onAddProject: (data: {}) => vo
       dueDate: new Date(data.dueDate),
     };
 
-    props.onAddProject(projectData);
+    // props.onAddProject(projectData);
+    router.push('/')
   }
 
   return (
@@ -95,7 +104,8 @@ const InputForm: React.FC<{ onCancel: () => void, onAddProject: (data: {}) => vo
         <div className="mt-8 flex items-center justify-end gap-4">
           <button
             className="text-stone-800 hover:font-semibold hover:text-stone-950"
-            onClick={props.onCancel}
+            onClick={handleCancel}
+            type="button"
           >
             Cancel
           </button>

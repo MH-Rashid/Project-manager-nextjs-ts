@@ -3,6 +3,7 @@
 import React from "react";
 import type { Metadata } from "next";
 import "./globals.css";
+import DataContextProvider from "../store/data-context";
 
 import App from "../components/App";
 
@@ -19,10 +20,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <main className="h-screen flex align-top gap-8">
-          <App />
-          {children}
-        </main>
+        <DataContextProvider>
+          <main className="h-screen flex align-top gap-8">
+            <App />
+            {children}
+          </main>
+        </DataContextProvider>
       </body>
     </html>
   );
