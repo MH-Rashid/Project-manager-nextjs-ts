@@ -1,6 +1,5 @@
 import { createPortal } from "react-dom";
 import { forwardRef, useImperativeHandle, useRef } from "react";
-import Button from "./Button";
 
 const ErrorModal = forwardRef(function ErrorModal(props, ref) {
   const dialog = useRef<HTMLDialogElement>(null);

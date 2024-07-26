@@ -1,28 +1,34 @@
 "use client"
 
-import { createContext, useReducer } from "react";
+import { createContext, useEffect, useReducer } from "react";
 import dummyProjects from "../projects.json";
 import dummyTasks from "../tasks.json";
-import { Project } from "../components/Sidebar";
-import { Task } from "../app/project-details/page";
-
-type InitialStateType = {
-  projects: Project[],
-  tasks: Task[],
-  addProject: (project: Project) => void,
-  deleteProject: (id: string) => void, 
-}
+import { Project } from "../types";
+import { Task } from "../types";
+import { InitialStateType } from "../types";
 
 const initialState: InitialStateType = {
   projects: [],
   tasks: [],
+  selectedProjectId: undefined,
   addProject: () => {},
-  deleteProject: () => {}, 
+  deleteProject: () => {},
+  addTask: () => {},
+  deleteTask: () => {},
+  setProjectId: () => {},
 };
 
 export const DataContext = createContext<InitialStateType>(initialState);
 
 function DataReducer(state: any, action: any) {
+  if (action.type === "FETCH_DATA") {
+    return {
+      ...state,
+      projects: action.projects,
+      tasks: action.tasks
+    };
+  }
+
   if (action.type === "ADD_PROJECT") {
     const updatedProjects = [...state.projects];
 
@@ -33,106 +39,152 @@ function DataReducer(state: any, action: any) {
       dueDate: action.project.dueDate,
     });
 
-    localStorage.setItem('projects', JSON.stringify(updatedProjects));
+    console.log(updatedProjects);
+
+    localStorage.setItem("projects", JSON.stringify(updatedProjects));
 
     return {
+      ...state,
       projects: updatedProjects,
-      ...state
     };
   }
 
   if (action.type === "DELETE_PROJECT") {
-    const updatedProjects = [...state.projects];
-    const deletedProjectIndex = updatedProjects.findIndex(
-      (project) => project.id === action.id
+    const filteredProjects = state.projects.filter(
+      (project: any) => project.id !== action.id
     );
+    console.log(filteredProjects);
 
-    updatedProjects.splice(deletedProjectIndex, 1);
-
-    // const updatedItem = {
-    //   ...updatedItems[updatedItemIndex],
-    // };
-
-    // updatedItem.quantity += action.amount;
-
-    // if (updatedItem.quantity <= 0) {
-    //   updatedItems.splice(updatedItemIndex, 1);
-    // } else {
-    //   updatedItems[updatedItemIndex] = updatedItem;
-    // }
-
-    localStorage.setItem('projects', JSON.stringify(updatedProjects));
+    localStorage.setItem("projects", JSON.stringify(filteredProjects));
 
     return {
-      projects: updatedProjects,
-      ...state
+      ...state,
+      projects: filteredProjects,
     };
   }
 
-  // if (action.type === "ADD_TASK") {
-  //   const updatedTasks = [...state.tasks];
+  if (action.type === "ADD_TASK") {
+    const updatedTasks = [...state.tasks];
 
-  //   updatedTasks.push({
-  //     id: action.task.id,
-  //     title: action.task.title,
-  //     projectId: action.task.projectId,
-  //     dueDate: action.task.dueDate,
-  //   });
+    updatedTasks.push({
+      id: action.task.id,
+      title: action.task.title,
+      projectId: action.task.projectId,
+    });
 
-  //   localStorage.setItem('projects', JSON.stringify(updatedTasks));
+    console.log(updatedTasks);
 
-  //   return {
-  //     projects: updatedTasks,
-  //   };
-  // }
+    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
 
-  // return state;
+    return {
+      ...state,
+      tasks: updatedTasks,
+    };
+  }
+
+  if (action.type === "DELETE_TASK") {
+    const filteredTasks = state.tasks.filter(
+      (task: any) => task.id !== action.id
+    );
+    console.log(filteredTasks);
+
+    localStorage.setItem("tasks", JSON.stringify(filteredTasks));
+
+    return {
+      ...state,
+      tasks: filteredTasks,
+    };
+  }
+
+  if (action.type === "SET_PROJECT_ID") {
+    return {
+      ...state,
+      selectedProjectId: action.id,
+    };
+  }
+
+  return state;
 }
 
 const DataContextProvider: React.FC<{ children?: React.ReactNode }> = (props) => {
+  const fetchedProjects = useEffect(() => {
+    typeof window !== undefined ? localStorage.getItem('projects') : null
+  }, [])
+
+  useEffect(() => {
+    const savedProjects = localStorage.getItem('projects');
+    const fetchedProjects = savedProjects ? JSON.parse(savedProjects) : dummyProjects;
+    const savedTasks = localStorage.getItem('tasks');
+    const fetchedTasks = savedTasks ? JSON.parse(savedTasks) : dummyTasks;
+
+    fetchData(fetchedProjects, fetchedTasks);
+  }, []);
+  
   const [dataState, dataDispatch] = useReducer<(state: any, action: any) => any>(DataReducer, {
-    projects: dummyProjects, // JSON.parse(localStorage.getItem('projects')) || dummyProjects
-    tasks: dummyTasks, // JSON.parse(localStorage.getItem('tasks')) || dummyTasks
+    projects: [],
+    tasks: [],
+    selectedProjectId: undefined,
   });
+
+  function fetchData(projects: Project[], tasks: Task[]) {
+    dataDispatch({
+      type: "FETCH_DATA",
+      projects,
+      tasks
+    });
+  }
 
   function addProject(project: Project) {
     dataDispatch({
       type: "ADD_PROJECT",
-      project
-    });
-  }
-    
-  function deleteProject(id: string) {
-    dataDispatch({
-      type: "DELETE_PROJECT",
-      id
+      project,
     });
   }
 
-  // function addTask(task: Task) {
-  //   dataDispatch({
-  //     type: "ADD_TASK",
-  //     task
-  //   });
-  // }
-  
-  // function deleteTask(id: string) {
-  //   dataDispatch({
-  //     type: "DELETE_TASK",
-  //     id
-  //   });
-  // }
+  function deleteProject(id: string) {
+    dataDispatch({
+      type: "DELETE_PROJECT",
+      id,
+    });
+  }
+
+  function addTask(task: Task) {
+    dataDispatch({
+      type: "ADD_TASK",
+      task,
+    });
+  }
+
+  function deleteTask(id: string) {
+    dataDispatch({
+      type: "DELETE_TASK",
+      id,
+    });
+  }
+
+  function setProjectId(id: string | undefined) {
+    dataDispatch({
+      type: "SET_PROJECT_ID",
+      id,
+    });
+  }
 
   const ctxValue = {
     projects: dataState.projects,
     tasks: dataState.tasks,
+    selectedProjectId: dataState.selectedProjectId,
     addProject,
-    deleteProject
+    deleteProject,
+    addTask,
+    deleteTask,
+    setProjectId,
   };
 
   return (
-    <DataContext.Provider value={ctxValue}>{props.children}</DataContext.Provider>
+    <DataContext.Provider value={ctxValue}>
+      {props.children}
+    </DataContext.Provider>
   );
-}
+};
 
 export default DataContextProvider;

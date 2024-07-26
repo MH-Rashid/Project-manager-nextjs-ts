@@ -1,21 +1,14 @@
 "use client";
 
-// fallback page
+// contains the fallback
 
-import React from "react";
 import { useRouter } from "next/navigation";
 import fallbackImage from "../assets/no-projects.png";
 import Button from "../components/Button";
 import Image from "next/image";
 
-const Home: React.FC<{onCreateProject: () => void}> = (props) => {
+const Home: React.FC = () => {
   const router = useRouter();
-  
-  const handleCreateProject = () => {
-    // setSelectedProjectId(false);
-    router.push("/new-project");
-    // setFormDisplay(true);
-  };
   
   return (
     <div className="mt-24 w-2/3 text-center">
@@ -26,7 +19,7 @@ const Home: React.FC<{onCreateProject: () => void}> = (props) => {
       <p className="mb-4 text-stone-500">
         Select a project or get started with a new one
       </p>
-      <Button onClick={handleCreateProject}>
+      <Button onClick={() => {router.push("/new-project")}}>
         Create new project
       </Button>
     </div>

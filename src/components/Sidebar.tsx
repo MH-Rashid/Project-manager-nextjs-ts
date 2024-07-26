@@ -1,37 +1,28 @@
+"use client";
+
+import { useContext } from "react";
+import { DataContext } from "../store/data-context";
+import { useRouter } from "next/navigation";
+import { Project } from "../types";
 import ProjectsList from "./ProjectsList";
 import Button from "./Button";
 
-export type Project = {
-  id: string;
-  title: string;
-  description: string;
-  dueDate: string;
-};
+const Sidebar: React.FC = () => {
+  const router = useRouter();
+  const { setProjectId } = useContext(DataContext);
 
-interface SidebarProps {
-  projects: Project[];
-  selectedProjectId: string | boolean;
-  onCreateProject: () => {} | any;
-  onDisplayProject: (id: string) => {} | any;
-}
+  const openForm = () => {
+    setProjectId(undefined);
+    router.push("/new-project");
+  };
 
-const Sidebar: React.FC<SidebarProps> = ({
-  projects,
-  onCreateProject,
-  onDisplayProject,
-  selectedProjectId,
-}) => {
   return (
     <aside className="rounded-r-xl bg-stone-900 px-8 py-16 text-stone-50 md:w-[22rem]">
-      <Button onClick={onCreateProject}>Add Project</Button>
+      <Button onClick={openForm}>Add Project</Button>
       <h2 className="mb-8 font-bold uppercase text-stone-200 md:text-xl">
         Your Projects
       </h2>
-      <ProjectsList
-        items={projects}
-        onLiftProject={onDisplayProject}
-        selectedProjectId={selectedProjectId}
-      />
+      <ProjectsList/>
     </aside>
   );
 };
