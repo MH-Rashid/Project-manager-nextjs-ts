@@ -6,9 +6,8 @@ import { Project } from "@/src/types";
 import { DataContext } from "@/src/store/data-context";
 import { useRouter } from "next/navigation";
 import { Task } from "@/src/types";
-import { ProjectDetailsProps } from "@/src/types";
 
-const ProjectDetailsPage: NextPage<ProjectDetailsProps> = (props) => {
+const ProjectDetailsPage: NextPage<{params: any}> = (props) => {
   const { projects, tasks, deleteProject, deleteTask, addTask } = useContext(DataContext);
   const [enteredTask, setEnteredTask] = useState("");
   const projectId = props.params.projectDetails;

@@ -21,10 +21,3 @@ export type InitialStateType = {
   deleteTask: (id: string) => void;
   setProjectId: (id: string | undefined) => void;
 };
-
-export interface ProjectDetailsProps {
-  tasks: Task[];
-  params: any;
-  onAddTask: (task: string) => void;
-  onDeleteTask: (id: string) => void;
-}
