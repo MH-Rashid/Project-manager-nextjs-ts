@@ -1,13 +1,14 @@
 "use client";
 
-import React, { useContext, useState } from "react";
+import { NextPage } from "next";
+import { useContext, useState } from "react";
 import { Project } from "@/src/types";
 import { DataContext } from "@/src/store/data-context";
 import { useRouter } from "next/navigation";
 import { Task } from "@/src/types";
 import { ProjectDetailsProps } from "@/src/types";
 
-const ProjectDetailsPage: React.FC<ProjectDetailsProps> = (props) => {
+const ProjectDetailsPage: NextPage<ProjectDetailsProps> = (props) => {
   const { projects, tasks, deleteProject, deleteTask, addTask } = useContext(DataContext);
   const [enteredTask, setEnteredTask] = useState("");
   const projectId = props.params.projectDetails;
